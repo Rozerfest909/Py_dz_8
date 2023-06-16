@@ -48,6 +48,60 @@ def print_data():
     return data_first, data_second
 
 
+def change_line(dataFile, numberRow, numberFile):
+    answer = input(f"Изменить данную запись\n{dataFile[numberRow]}?\nВведите ответ: ")
+    while answer != 'да':
+        numberRow = int(input('Введите номер записи: '))
+
+    print(f"Меняем данную запись\n{dataFile[numberRow]}")
+    if numberFile == 1:
+        name = dataFile[numberRow].split('\n')[0]
+        surname = dataFile[numberRow].split('\n')[1]
+        phone = dataFile[numberRow].split('\n')[2]
+        address = dataFile[numberRow].split('\n')[3]
+    if numberFile == 2:
+        name = dataFile[numberRow].split(';')[0]
+        surname = dataFile[numberRow].split(';')[1]
+        phone = dataFile[numberRow].split(';')[2]
+        address = dataFile[numberRow].split(';')[3]
+
+    answer = int(input(f"Какие данные Вы хотите поменять?\n"
+                       f"1. Имя\n"
+                       f"2. Фамилия\n"
+                       f"3. Номер телефона\n"
+                       f"4. Адрес\n"
+                       f"Введите ответ: "))
+    while answer < 1 or answer > 4:
+        print("Вы ошиблись!\nВведите корректный номер от 1 до 4")
+        answer = int(input(f"Какие данные Вы хотите поменять?\n"
+                           f"1. Имя\n"
+                           f"2. Фамилия\n"
+                           f"3. Номер телефона\n"
+                           f"4. Адрес\n"
+                           f"Введите ответ: "))
+    if answer == 1:
+        name = name_data()
+    if answer == 2:
+        surname = surname_data()
+    if answer == 3:
+        phone = phone_data()
+    elif answer == 4:
+        address = address_data()
+
+    if numberFile == 1:
+        data_first = dataFile[:numberRow] + [f'{name}\n{surname}\n{phone}\n{address}'] + \
+                     dataFile[numberRow + 1:]
+        with open('data_first_variant.csv', 'w', encoding='utf-8') as file:
+            file.write(''.join(data_first))
+        print('Изменения успешно сохранены!')
+    else:
+        data_second = dataFile[:numberRow] + [f'{name};{surname};{phone};{address}'] + \
+                      dataFile[numberRow + 1:]
+        with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
+            file.write(''.join(data_second))
+        print('Изменения успешно сохранены!')
+
+
 def put_data():
     print('Из какого файла Вы хотите изменить данные?')
     data_first, data_second = print_data()
@@ -61,32 +115,12 @@ def put_data():
         print("Какую именно запись по счету Вы хотите изменить?")
         number_journal = int(input('Введите номер записи: '))
         number_journal -= 1
-        # Можно добавить проверку, чтобы человек не выходил за пределы записей
-        print(f'Изменить данную запись\n{data_first[number_journal]}')
-        name = name_data()
-        surname = surname_data()
-        phone = phone_data()
-        address = address_data()
-        data_first = data_first[:number_journal] + [f'{name}\n{surname}\n{phone}\n{address}\n'] + \
-                     data_first[number_journal + 1:]
-        with open('data_first_variant.csv', 'w', encoding='utf-8') as file:
-            file.write(''.join(data_first))
-        print('Изменения успешно сохранены!')
+        change_line(data_first, number_journal, 1)
     else:
         print("Какую именно запись по счету Вы хотите изменить?")
         number_journal = int(input('Введите номер записи: '))
         number_journal -= 1
-        # Можно добавить проверку, чтобы человек не выходил за пределы записи
-        print(f'Изменить данную запись\n{data_second[number_journal]}')
-        name = name_data()
-        surname = surname_data()
-        phone = phone_data()
-        address = address_data()
-        data_second = data_second[:number_journal] + [f'{name};{surname};{phone};{address}\n'] + \
-                      data_second[number_journal + 1:]
-        with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
-            file.write(''.join(data_second))
-        print('Изменения успешно сохранены!')  # Можно вывести конечные данные
+        change_line(data_second, number_journal, 2)
 
 
 def delete_data():
