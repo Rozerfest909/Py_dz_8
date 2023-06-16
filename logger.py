@@ -25,7 +25,7 @@ def input_data():
             file.write(f'{name}\n{surname}\n{phone}\n{address}\n\n')
     else:
         with open('data_second_variant.csv', 'a', encoding='utf-8') as file:
-            file.write(f'{name};{surname};{phone};{address}\n\n')
+            file.write(f'{name};{surname};{phone};{address}\n')
 
 
 def print_data():
@@ -51,10 +51,9 @@ def print_data():
 def change_line(dataFile, numberRow, numberFile):
     answer = input(f"Изменить данную запись\n{dataFile[numberRow]}?\nВведите ответ: ")
     while answer != 'да':
-        numberRow = int(input('Введите номер записи: '))
-        numberRow -= 1
+        numberRow = int(input('Введите номер записи: ')) - 1
 
-    print(f"Меняем данную запись\n{dataFile[numberRow]}")
+    print(f"Меняем данную запись\n{dataFile[numberRow]}\n")
     if numberFile == 1:
         name = dataFile[numberRow].split('\n')[0]
         surname = dataFile[numberRow].split('\n')[1]
@@ -101,8 +100,7 @@ def change_line(dataFile, numberRow, numberFile):
         data_second = dataFile[:numberRow] + [f'{name};{surname};{phone};{address}'] + \
                       dataFile[numberRow + 1:]
         if numberRow + 1 == len(dataFile):
-            data_second = dataFile[:numberRow] + [f'{name}\n{surname}\n{phone}\n{address}\n'] + \
-                         dataFile[numberRow + 1:]
+            data_second = dataFile[:numberRow] + [f'{name};{surname};{phone};{address}\n']
         with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_second))
         print('Изменения успешно сохранены!')
