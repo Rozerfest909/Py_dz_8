@@ -52,6 +52,7 @@ def change_line(dataFile, numberRow, numberFile):
     answer = input(f"Изменить данную запись\n{dataFile[numberRow]}?\nВведите ответ: ")
     while answer != 'да':
         numberRow = int(input('Введите номер записи: '))
+        numberRow -= 1
 
     print(f"Меняем данную запись\n{dataFile[numberRow]}")
     if numberFile == 1:
@@ -81,9 +82,9 @@ def change_line(dataFile, numberRow, numberFile):
                            f"Введите ответ: "))
     if answer == 1:
         name = name_data()
-    if answer == 2:
+    elif answer == 2:
         surname = surname_data()
-    if answer == 3:
+    elif answer == 3:
         phone = phone_data()
     elif answer == 4:
         address = address_data()
@@ -91,12 +92,17 @@ def change_line(dataFile, numberRow, numberFile):
     if numberFile == 1:
         data_first = dataFile[:numberRow] + [f'{name}\n{surname}\n{phone}\n{address}'] + \
                      dataFile[numberRow + 1:]
+        if numberRow + 1 == len(dataFile):
+            data_first = dataFile[:numberRow] + [f'{name}\n{surname}\n{phone}\n{address}\n']
         with open('data_first_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_first))
         print('Изменения успешно сохранены!')
     else:
         data_second = dataFile[:numberRow] + [f'{name};{surname};{phone};{address}'] + \
                       dataFile[numberRow + 1:]
+        if numberRow + 1 == len(dataFile):
+            data_second = dataFile[:numberRow] + [f'{name}\n{surname}\n{phone}\n{address}\n'] + \
+                         dataFile[numberRow + 1:]
         with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_second))
         print('Изменения успешно сохранены!')
@@ -137,7 +143,8 @@ def delete_data():
         number_journal = int(input('Введите номер записи: '))
         # Можно добавить проверку, чтобы человек не выходил за пределы записи
         print(f'Удалить данную запись\n{data_first[number_journal - 1]}')
-        data_first = data_first[:number_journal] + data_first[number_journal + 1:]
+        # print(data_first[:number_journal - 1], data_first[number_journal + 1:]) error
+        data_first = data_first[:number_journal - 1] + data_first[number_journal + 1:]
         with open('data_first_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_first))
         print('Изменения успешно сохранены!')
