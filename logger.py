@@ -26,8 +26,6 @@ def input_data():
     else:
         with open('data_second_variant.csv', 'a', encoding='utf-8') as file:
             file.write(f'{name};{surname};{phone};{address}\n')
-
-
 def print_data():
     print('Вывожу данные для Вас данные из 1-ого файла\n')
     with open('data_first_variant.csv', 'r', encoding='utf-8') as file:
@@ -46,8 +44,6 @@ def print_data():
         data_second = list(file.readlines())
         print(*data_second)
     return data_first, data_second
-
-
 def change_line(dataFile, numberRow, numberFile):
     answer = input(f"Изменить данную запись\n{dataFile[numberRow]}?\nВведите ответ: ")
     while answer != 'да':
@@ -104,8 +100,6 @@ def change_line(dataFile, numberRow, numberFile):
         with open('data_second_variant.csv', 'w', encoding='utf-8') as file:
             file.write(''.join(data_second))
         print('Изменения успешно сохранены!')
-
-
 def put_data():
     print('Из какого файла Вы хотите изменить данные?')
     data_first, data_second = print_data()
@@ -125,8 +119,6 @@ def put_data():
         number_journal = int(input('Введите номер записи: '))
         number_journal -= 1
         change_line(data_second, number_journal, 2)
-
-
 def delete_data():
     print('Из какого файла Вы хотите удалить данные?')
     data_first, data_second = print_data()

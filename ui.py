@@ -9,11 +9,13 @@ def interface():
               '2. Удалить данные\n'
               '3. Изменить данные\n'
               '4. Вывести данные\n'
-              '5. Выход')
+              '5. Удалить данные\n'
+              '6. Изменить данные\n'
+              '0. Выход')
         command = int(input("Введите номер операции: "))
 
-        while command < 1 or command > 5:
-            print('Ты дурак?! Даю тебе последний шанс')
+        while command < 0 or command > 6:
+            print('Даю тебе последний шанс')
             command = int(input("Введите номер операции: "))
 
         if command == 1:
@@ -25,7 +27,12 @@ def interface():
         elif command == 4:
             print_data()
         elif command == 5:
+            delete_data()
+        elif command == 6:
+            put_data()
+        elif command == 0:
             print("Спасибо, что воспользовались нашими услугами. Всего доброго!")
+            break
 
 
 
